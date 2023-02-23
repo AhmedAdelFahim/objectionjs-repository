@@ -1,0 +1,42 @@
+{
+    "name": "objectionjs-repository",
+    "version": "1.0.0",
+    "description": "",
+    "main": "build/index.js",
+    "files": [
+        "build/**/*"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+        "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run lint",
+        "preversion": "npm run lint"
+    },
+    "keywords": [],
+    "author": "Ahmed Adel",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^18.11.18",
+        "@types/ramda": "^0.28.22",
+        "@typescript-eslint/eslint-plugin": "^5.49.0",
+        "@typescript-eslint/parser": "^5.49.0",
+        "eslint": "^8.33.0",
+        "eslint-config-prettier": "^8.6.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "prettier": "^2.8.3",
+        "rimraf": "^4.1.2",
+        "ts-node": "^10.9.1",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "http-status": "^1.6.2",
+        "joi": "^17.8.1",
+        "knex": "^2.4.2",
+        "ramda": "^0.28.0"
+    }
+}
