@@ -22,14 +22,7 @@ export interface IDeletionOptions {
 /* eslint-disable no-unused-vars */
 export interface IDataWriter<T> {
   create(data: Omit<Partial<T>, 'id'>, options: ICreationOptions): Promise<T>;
-  createMany(
-    data: Omit<Partial<T>, 'id'>[],
-    options: ICreationOptions,
-  ): Promise<T[]>;
+  createMany(data: Omit<Partial<T>, 'id'>[], options: ICreationOptions): Promise<T[]>;
   delete(conditions: Partial<T>, options: IDeletionOptions): Promise<number>;
-  update(
-    conditions: Partial<T>,
-    data: Partial<T>,
-    options: IUpdatingOptions,
-  ): Promise<number>;
+  update(conditions: Partial<T>, data: Partial<T>, options: IUpdatingOptions): Promise<number>;
 }
