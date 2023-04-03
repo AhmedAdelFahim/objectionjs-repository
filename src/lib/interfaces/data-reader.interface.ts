@@ -7,6 +7,7 @@ export interface IDataReader<T> {
 
 export interface IFindingOptions {
   trx?: Knex.Transaction;
+  forUpdate?: boolean;
   whereNotIn?: {
     field: string;
     values: any;

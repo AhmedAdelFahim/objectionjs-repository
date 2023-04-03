@@ -50,6 +50,9 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
         query = query.whereNotIn(condition.field, condition.values);
       });
     }
+    if (options.forUpdate) {
+      query = query.forUpdate();
+    }
     return query;
   }
 
@@ -64,6 +67,9 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
       options.whereNotIn.forEach((condition: any) => {
         query = query.whereNotIn(condition.field, condition.values);
       });
+    }
+    if (options.forUpdate) {
+      query = query.forUpdate();
     }
     return query;
   }
