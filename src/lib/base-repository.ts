@@ -39,7 +39,7 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
   }
 
   getOne(conditions: Partial<T>, options: IFindingOptions = {}): Promise<T | undefined> {
-    let query = this.model.query().findOne(conditions);
+    let query = this.model.query(options?.trx).findOne(conditions);
     if (!R.isNil(options.whereIn)) {
       options.whereIn.forEach((condition: any) => {
         query = query.whereIn(condition.field, condition.values);
@@ -57,7 +57,7 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
   }
 
   getAll(conditions: Partial<T>, options: IFindingOptions = {}): Promise<T[]> {
-    let query = this.model.query().where(conditions);
+    let query = this.model.query(options?.trx).where(conditions);
     if (!R.isNil(options.whereIn)) {
       options.whereIn.forEach((condition: any) => {
         query = query.whereIn(condition.field, condition.values);
