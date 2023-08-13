@@ -35,7 +35,18 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
   }
 
   update(conditions: Partial<T>, data: Partial<T>, options: IUpdatingOptions = {}): Promise<number> {
-    return this.model.query(options?.trx).patch(data).where(conditions);
+    let query = this.model.query(options?.trx).patch(data).where(conditions);
+    if (!R.isNil(options.whereIn)) {
+      options.whereIn.forEach((condition: any) => {
+        query = query.whereIn(condition.field, condition.values);
+      });
+    }
+    if (!R.isNil(options.whereNotIn)) {
+      options.whereNotIn.forEach((condition: any) => {
+        query = query.whereNotIn(condition.field, condition.values);
+      });
+    }
+    return query;
   }
 
   getOne(conditions: Partial<T>, options: IFindingOptions = {}): Promise<T | undefined> {

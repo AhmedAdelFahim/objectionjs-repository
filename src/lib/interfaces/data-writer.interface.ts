@@ -5,6 +5,14 @@ export interface ICreationOptions {
 
 export interface IUpdatingOptions {
   trx?: Knex.Transaction;
+  whereNotIn?: {
+    field: string;
+    values: any;
+  }[];
+  whereIn?: {
+    field: string;
+    values: any;
+  }[];
 }
 
 export interface IDeletionOptions {
