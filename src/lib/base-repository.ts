@@ -1,6 +1,6 @@
 import type { Knex } from 'knex';
 import R from 'ramda';
-import { IDataReader, IFindingOptions } from './interfaces/data-reader.interface';
+import { IDataReader, IFindingOptions, IRelatedModelsOptions } from './interfaces/data-reader.interface';
 import { ICreationOptions, IDataWriter, IDeletionOptions, IUpdatingOptions } from './interfaces/data-writer.interface';
 
 export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T> {
@@ -92,6 +92,24 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
 
   knex(): Knex {
     return this.model.knex();
+  }
+
+  async getWithRelatedModels(conditions: Partial<T>, options: IRelatedModelsOptions = { relatedModels: {} }): Promise<T[]> {
+    let query = this.model
+      .query(options?.trx)
+      .withGraphFetched({ ...options.relatedModels })
+      .where(conditions);
+    if (!R.isNil(options.whereIn)) {
+      options.whereIn.forEach((condition: any) => {
+        query = query.whereIn(condition.field, condition.values);
+      });
+    }
+    if (!R.isNil(options.whereNotIn)) {
+      options.whereNotIn.forEach((condition: any) => {
+        query = query.whereNotIn(condition.field, condition.values);
+      });
+    }
+    return query;
   }
 
   async getKnexInstance(): Promise<any> {
