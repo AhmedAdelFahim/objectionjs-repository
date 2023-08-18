@@ -94,7 +94,10 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
     return this.model.knex();
   }
 
-  async getWithRelatedModels(conditions: Partial<T>, options: IRelatedModelsOptions = { relatedModels: {} }): Promise<T[]> {
+  async getWithRelatedModels(
+    conditions: Partial<T>,
+    options: IRelatedModelsOptions = { relatedModels: {} },
+  ): Promise<T[]> {
     let query = this.model
       .query(options?.trx)
       .withGraphFetched({ ...options.relatedModels })

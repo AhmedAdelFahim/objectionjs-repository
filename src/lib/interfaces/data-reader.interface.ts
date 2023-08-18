@@ -5,7 +5,6 @@ export interface IDataReader<T> {
   getAll(conditions: Partial<T>, options: IFindingOptions): Promise<T[]>;
 }
 
-
 export interface IRelatedModelsOptions {
   [key: string]: any;
   trx?: Knex.Transaction;
