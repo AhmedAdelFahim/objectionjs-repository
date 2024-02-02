@@ -6,7 +6,6 @@ before(function (done) {
       done();
     })
     .catch((err: any) => {
-      console.log('before', err);
       done(err);
     });
 });
@@ -17,7 +16,6 @@ after(function (done) {
       done();
     })
     .catch((err: any) => {
-      console.log('aaaa', err);
       done(err);
     });
 });
