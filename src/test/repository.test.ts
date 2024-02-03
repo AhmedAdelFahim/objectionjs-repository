@@ -34,6 +34,11 @@ describe('ObjectionJS Repository Testing', function () {
       assert.equal(1, users.length);
       assert.equal('Ali', users[0].name);
     });
+
+    it('Should get all users with where in condition.', async function () {
+      const users = await userRepo.getAll({}, { whereIn: [{ field: 'name', values: ['Ahmed', 'Ali'] }] });
+      assert.equal(2, users.length);
+    });
   });
 
   describe('Write functions testing', function () {
@@ -46,6 +51,32 @@ describe('ObjectionJS Repository Testing', function () {
       const user = await userRepo.getOne(userToBeInserted);
       assert.equal(userToBeInserted.age, user?.age);
       assert.equal(userToBeInserted.name, user?.name);
+    });
+
+    it('Should update user.', async function () {
+      const userBeforeUpdate = {
+        name: 'Ahmed',
+        age: 25,
+      };
+      const userToBeUpdated = {
+        name: 'Yamaç',
+        age: 29,
+      };
+      await userRepo.update(userBeforeUpdate, userToBeUpdated);
+      const updatedUser = await userRepo.getOne(userToBeUpdated);
+      const oldUser = await userRepo.getOne(userBeforeUpdate);
+      assert.equal(oldUser, undefined);
+      assert.equal(userToBeUpdated.name, updatedUser?.name);
+    });
+
+    it('Should delete user.', async function () {
+      const userToBeDeleted = {
+        name: 'Ahmed',
+        age: 25,
+      };
+      await userRepo.delete(userToBeDeleted);
+      const oldUser = await userRepo.getOne(userToBeDeleted);
+      assert.equal(oldUser, undefined);
     });
   });
 });

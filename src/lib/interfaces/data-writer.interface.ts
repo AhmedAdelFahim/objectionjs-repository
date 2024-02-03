@@ -1,14 +1,18 @@
 import { Knex } from 'knex';
 export interface ICreationOptions {
+  // database Transaction
   trx?: Knex.Transaction;
 }
 
 export interface IUpdatingOptions {
+  // database Transaction
   trx?: Knex.Transaction;
+  // select where column not in array
   whereNotIn?: {
     field: string;
     values: any;
   }[];
+  // select where column in array
   whereIn?: {
     field: string;
     values: any;
@@ -16,11 +20,14 @@ export interface IUpdatingOptions {
 }
 
 export interface IDeletionOptions {
+  // database Transaction
   trx?: Knex.Transaction;
+  // select where column not in array
   whereNotIn?: {
     field: string;
     values: any;
   }[];
+  // select where column in array
   whereIn?: {
     field: string;
     values: any;

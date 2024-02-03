@@ -20,12 +20,16 @@ export interface IRelatedModelsOptions {
 }
 
 export interface IFindingOptions {
+  // database Transaction
   trx?: Knex.Transaction;
+  // lock selected rows or not
   forUpdate?: boolean;
+  // select where column not in array
   whereNotIn?: {
     field: string;
     values: any;
   }[];
+  // select where column in array
   whereIn?: {
     field: string;
     values: any;
