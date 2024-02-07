@@ -110,6 +110,10 @@ IFindingOptions {
     field: string;
     values: any;
   }[];
+  // select where columns is null
+  whereNull?: string[];
+  // select where columns is not null
+  whereNotNull?: string[];
 }
 ```
 
@@ -136,6 +140,11 @@ IUpdatingOptions {
     field: string;
     values: any;
   }[];
+
+  // select where columns is null
+  whereNull?: string[];
+  // select where columns is not null
+  whereNotNull?: string[];
 }
 ```
 
@@ -154,6 +163,10 @@ IDeletionOptions {
     field: string;
     values: any;
   }[];
+  // select where columns is null
+  whereNull?: string[];
+  // select where columns is not null
+  whereNotNull?: string[];
 }
 ```
 

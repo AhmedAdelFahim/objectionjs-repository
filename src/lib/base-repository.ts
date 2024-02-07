@@ -1,4 +1,4 @@
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 import R from 'ramda';
 import { IDataReader, IFindingOptions, IRelatedModelsOptions } from './interfaces/data-reader.interface';
 import { ICreationOptions, IDataWriter, IDeletionOptions, IUpdatingOptions } from './interfaces/data-writer.interface';
