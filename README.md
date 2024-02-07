@@ -96,6 +96,8 @@ options is **IDeletionOptions**.
 
 ```bash
 IFindingOptions {
+  // select specific columns
+  select?: string[];
   // database Transaction
   trx?: Knex.Transaction;
   // lock selected rows or not
