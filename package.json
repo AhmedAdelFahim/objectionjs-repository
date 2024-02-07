@@ -1,6 +1,6 @@
 {
     "name": "objectionjs-repository",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "ObjectionJS Repository is repository pattern implementation on top of KnexJS and ObjectionJS",
     "main": "build/index.js",
     "files": [
