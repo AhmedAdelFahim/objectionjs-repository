@@ -25,16 +25,14 @@ export class Database {
   }
 
   static async initSchema() {
-    if (await (await this.getInstance())?.schema.hasTable(TABLES.USER)) {
-      return;
-    }
-
+    await (await this.getInstance())?.schema.dropTableIfExists(TABLES.USER);
     await (
       await this.getInstance()
     )?.schema.createTable(TABLES.USER, (table: any) => {
       table.increments('id');
       table.string('name');
       table.integer('age');
+      table.string('email').defaultTo(null);
     });
   }
 

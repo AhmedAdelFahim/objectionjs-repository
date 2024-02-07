@@ -1,4 +1,4 @@
-import { Knex } from 'knex';
+import { IOptions } from './commen.interface';
 
 export interface IDataReader<T> {
   getOne(conditions: Partial<T>, options: IFindingOptions): Promise<T | undefined>;
@@ -7,7 +7,7 @@ export interface IDataReader<T> {
 
 export interface IRelatedModelsOptions {
   [key: string]: any;
-  trx?: Knex.Transaction;
+  trx?: any;
   whereIn?: {
     field: string;
     values: any[];
@@ -19,19 +19,10 @@ export interface IRelatedModelsOptions {
   relatedModels?: any;
 }
 
-export interface IFindingOptions {
-  // database Transaction
-  trx?: Knex.Transaction;
+export interface IFindingOptions extends IOptions {
   // lock selected rows or not
   forUpdate?: boolean;
-  // select where column not in array
-  whereNotIn?: {
-    field: string;
-    values: any;
-  }[];
-  // select where column in array
-  whereIn?: {
-    field: string;
-    values: any;
-  }[];
+
+  // select specific columns
+  select?: string[];
 }

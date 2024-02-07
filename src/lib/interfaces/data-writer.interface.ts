@@ -1,38 +1,12 @@
-import { Knex } from 'knex';
+import { IOptions } from './commen.interface';
 export interface ICreationOptions {
   // database Transaction
-  trx?: Knex.Transaction;
+  trx?: any;
 }
 
-export interface IUpdatingOptions {
-  // database Transaction
-  trx?: Knex.Transaction;
-  // select where column not in array
-  whereNotIn?: {
-    field: string;
-    values: any;
-  }[];
-  // select where column in array
-  whereIn?: {
-    field: string;
-    values: any;
-  }[];
-}
+export type IUpdatingOptions = IOptions;
 
-export interface IDeletionOptions {
-  // database Transaction
-  trx?: Knex.Transaction;
-  // select where column not in array
-  whereNotIn?: {
-    field: string;
-    values: any;
-  }[];
-  // select where column in array
-  whereIn?: {
-    field: string;
-    values: any;
-  }[];
-}
+export type IDeletionOptions = IOptions;
 
 /* eslint-disable no-unused-vars */
 export interface IDataWriter<T> {

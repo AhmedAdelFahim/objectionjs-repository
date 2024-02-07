@@ -19,14 +19,48 @@ describe('ObjectionJS Repository Testing', function () {
       assert.equal('Ahmed', user?.name);
     });
 
+    it('Should get name only.', async function () {
+      const user = await userRepo.getOne(
+        { age: 25 },
+        {
+          select: ['name'],
+        },
+      );
+      assert.deepEqual(user, {
+        name: 'Ahmed',
+      });
+    });
+
+    it('Should get one user with where null.', async function () {
+      const user = await userRepo.getOne(
+        {},
+        {
+          whereNull: ['email'],
+        },
+      );
+      assert.equal(30, user?.age);
+      assert.equal('Ali', user?.name);
+    });
+
+    it('Should get All user with where not null.', async function () {
+      const users = await userRepo.getAll(
+        {},
+        {
+          whereNotNull: ['email'],
+        },
+      );
+      assert.equal(2, users?.length);
+      assert.equal('Adel', users[1]?.name);
+    });
+
     it('Should not get one user.', async function () {
-      const user = await userRepo.getOne({ age: 40 });
+      const user = await userRepo.getOne({ age: 41 });
       assert.equal(undefined, user);
     });
 
     it('Should get all users.', async function () {
       const users = await userRepo.getAll({});
-      assert.equal(2, users.length);
+      assert.equal(3, users.length);
     });
 
     it('Should get all users with condition.', async function () {

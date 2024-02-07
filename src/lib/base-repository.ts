@@ -2,12 +2,38 @@ import type { Knex } from 'knex';
 import R from 'ramda';
 import { IDataReader, IFindingOptions, IRelatedModelsOptions } from './interfaces/data-reader.interface';
 import { ICreationOptions, IDataWriter, IDeletionOptions, IUpdatingOptions } from './interfaces/data-writer.interface';
+import { IOptions } from './interfaces/commen.interface';
 
 export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T> {
   // model is objection Model
   constructor(public readonly model: any, private knexInstance: Knex) {}
 
-  createMany(items: Omit<Partial<T>, 'id'>[], options: ICreationOptions): Promise<T[]> {
+  private applyConditions(query: any, options: IOptions) {
+    if (!R.isNil(options.whereIn)) {
+      options.whereIn.forEach((condition: any) => {
+        query = query.whereIn(condition.field, condition.values);
+      });
+    }
+    if (!R.isNil(options.whereNull)) {
+      options.whereNull.forEach((column: string) => {
+        query = query.whereNull(column);
+      });
+    }
+    if (!R.isNil(options.whereNotNull)) {
+      options.whereNotNull.forEach((column: string) => {
+        query = query.whereNotNull(column);
+      });
+    }
+    if (!R.isNil(options.whereNotIn)) {
+      options.whereNotIn.forEach((condition: any) => {
+        query = query.whereNotIn(condition.field, condition.values);
+      });
+    }
+
+    return query;
+  }
+
+  createMany(items: Omit<Partial<T>, 'id'>[], options: ICreationOptions = {}): Promise<T[]> {
     return this.model.query(options?.trx).insert(items).returning('*');
   }
 
@@ -21,46 +47,20 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
     if (!R.isEmpty(conditions)) {
       query = query.where(conditions);
     }
-    if (!R.isNil(options.whereIn)) {
-      options.whereIn.forEach((condition: any) => {
-        query = query.whereIn(condition.field, condition.values);
-      });
-    }
-    if (!R.isNil(options.whereNotIn)) {
-      options.whereNotIn.forEach((condition: any) => {
-        query = query.whereNotIn(condition.field, condition.values);
-      });
-    }
+    query = this.applyConditions(query, options);
     return query;
   }
 
   update(conditions: Partial<T>, data: Partial<T>, options: IUpdatingOptions = {}): Promise<number> {
     let query = this.model.query(options?.trx).patch(data).where(conditions);
-    if (!R.isNil(options.whereIn)) {
-      options.whereIn.forEach((condition: any) => {
-        query = query.whereIn(condition.field, condition.values);
-      });
-    }
-    if (!R.isNil(options.whereNotIn)) {
-      options.whereNotIn.forEach((condition: any) => {
-        query = query.whereNotIn(condition.field, condition.values);
-      });
-    }
+    query = this.applyConditions(query, options);
     return query;
   }
 
   getOne(conditions: Partial<T>, options: IFindingOptions = {}): Promise<T | undefined> {
     let query = this.model.query(options?.trx).findOne(conditions);
-    if (!R.isNil(options.whereIn)) {
-      options.whereIn.forEach((condition: any) => {
-        query = query.whereIn(condition.field, condition.values);
-      });
-    }
-    if (!R.isNil(options.whereNotIn)) {
-      options.whereNotIn.forEach((condition: any) => {
-        query = query.whereNotIn(condition.field, condition.values);
-      });
-    }
+    query = query.select(options?.select || '*');
+    query = this.applyConditions(query, options);
     if (options.forUpdate) {
       query = query.forUpdate();
     }
@@ -69,16 +69,8 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
 
   getAll(conditions: Partial<T>, options: IFindingOptions = {}): Promise<T[]> {
     let query = this.model.query(options?.trx).where(conditions);
-    if (!R.isNil(options.whereIn)) {
-      options.whereIn.forEach((condition: any) => {
-        query = query.whereIn(condition.field, condition.values);
-      });
-    }
-    if (!R.isNil(options.whereNotIn)) {
-      options.whereNotIn.forEach((condition: any) => {
-        query = query.whereNotIn(condition.field, condition.values);
-      });
-    }
+    query = query.select(options?.select || '*');
+    query = this.applyConditions(query, options);
     if (options.forUpdate) {
       query = query.forUpdate();
     }

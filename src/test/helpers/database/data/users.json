@@ -2,11 +2,17 @@
     "users": [
         {
             "name": "Ahmed",
-            "age": 25
+            "age": 25,
+            "email": "ahmed@example.com"
         },
         {
             "name": "Ali",
             "age": 30
+        },
+        {
+            "name": "Adel",
+            "age": 40,
+            "email": "adel@example.com"
         }
     ]
 }
