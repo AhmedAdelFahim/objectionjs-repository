@@ -3,6 +3,7 @@ import R from 'ramda';
 import { IDataReader, IFindingOptions, IRelatedModelsOptions } from './interfaces/data-reader.interface';
 import { ICreationOptions, IDataWriter, IDeletionOptions, IUpdatingOptions } from './interfaces/data-writer.interface';
 import { IOptions } from './interfaces/commen.interface';
+import { AnyQueryBuilder } from 'objection';
 
 export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T> {
   // model is objection Model
@@ -80,6 +81,10 @@ export abstract class BaseRepository<T> implements IDataReader<T>, IDataWriter<T
   // Shortcut for Query Builder call
   qb(): Knex.QueryBuilder {
     return this.model.knex().table(this.model.tableName);
+  }
+
+  query(): AnyQueryBuilder {
+    return this.model.query();
   }
 
   knex(): Knex {

@@ -29,7 +29,7 @@ $ npm i objectionjs-repository
 
 ## Usage
 
-```bash
+```javascript
 // Define Interface
 export interface IUser {
   id: number;
@@ -57,7 +57,7 @@ export class UserRepository extends BaseRepository<IUser> {
 
 then you can use defined repository
 
-```bash
+```javascript
    const userRepo = new UserRepository(knexInstance);
    const user = await userRepo.getOne({ age: 25 })
 ```
@@ -94,7 +94,7 @@ options is **IDeletionOptions**.
 
 #### IFindingOptions
 
-```bash
+```javascript
 IFindingOptions {
   // select specific columns
   select?: string[];
@@ -120,7 +120,7 @@ IFindingOptions {
 ```
 
 #### ICreationOptions
-```bash
+```javascript
 ICreationOptions {
   // database Transaction
   trx?: Knex.Transaction;
@@ -128,7 +128,7 @@ ICreationOptions {
 ```
 
 #### IUpdatingOptions
-```bash
+```javascript
 IUpdatingOptions {
   // database Transaction
   trx?: Knex.Transaction;
@@ -151,7 +151,7 @@ IUpdatingOptions {
 ```
 
 #### IDeletionOptions
-```bash
+```javascript
 IDeletionOptions {
   // database Transaction
   trx?: Knex.Transaction;
