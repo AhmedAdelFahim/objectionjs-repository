@@ -1,6 +1,6 @@
 {
     "name": "objectionjs-repository",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "ObjectionJS Repository is repository pattern implementation on top of KnexJS and ObjectionJS",
     "main": "build/index.js",
     "files": [
@@ -49,6 +49,6 @@
     "dependencies": {
         "knex": "^2.5.1",
         "ramda": "^0.28.0",
-        "objection": "^3.1.3"
+        "objection": "^3.1.5"
     }
 }
